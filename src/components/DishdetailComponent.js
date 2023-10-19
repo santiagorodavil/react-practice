@@ -47,16 +47,18 @@ class DishDetail extends Component{
                     <div key={comment.id} className="col-12 col-md-10">
                         {comment.comment}
                         <p>
-                            -- {comment.author}, {comment.date}
+                            -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year:'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}
                         </p>
                     </div>
                 );
             });
             
             return(
+                <div className="container">
                 <div  className="row">
                     {this.renderDish(this.props.dish)}
                     {this.renderComment(comments)}
+                </div>
                 </div>
             );
         }
