@@ -9,7 +9,7 @@ import {DISHES} from '../shared/dishes';
 import {COMMENTS} from '../shared/comments';
 import {LEADERS} from '../shared/leaders';
 import {PROMOTIONS} from '../shared/promotions';
-import {Routes, Route, Navigate} from 'react-router-dom';
+import {Routes, Route, Navigate, useParams} from 'react-router-dom';
 
 class Main extends Component {
   constructor(props){
@@ -33,12 +33,27 @@ class Main extends Component {
         />
       )
     }
+
+    //Esta funcion usa react Params ver el  param dishId que se creo en la linea 55
+    const DishWithId= ()=>{
+      //Muestra los parametros que se le pasan al url
+      const location=useParams();
+      //console.log(location);
+      return(
+        
+        <DishDetail dish={this.state.dishes.filter((dish)=>dish.id === parseInt(location.dishId,10))[0]}
+          comments={this.state.comments.filter((comment)=> comment.dishId === parseInt(location.dishId,10))}
+        />
+      )      
+    }
+
     return (
       <div>
         <Header />
         <Routes>
           <Route path="/home" Component={HomePage}/>
           <Route path="/menu" Component={()=> <Menu dishes={this.state.dishes}/>} />
+          <Route path="/menu/:dishId" Component={DishWithId}/>
           <Route path="/contactus" Component={Contact}/>
           <Route path='*' element={<Navigate to="/home" replace/>} />
         </Routes>
